@@ -23,8 +23,8 @@ class StoreSkillsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'min:3', 'max:20'],
-            'slug' => ['required', Rule::unique('skills')->ignore($this->skill)]
+            'technology' => ['required', 'min:3', 'max:20'],
+            'skill' => ['required', Rule::unique('skills')->ignore($this->skill)]
         ];
     }
 }
