@@ -17,12 +17,12 @@ class AuthController extends Controller
 
         if (!Auth::attempt($request->only('email','password'))) {
             return response()->json([
-                'message' => 'Invalid credentials',
+                'message' => 'Invalid credentials, please check your email and password or create new account',
                 'errors' => [
                     'email' => 'Invalid credentials',
                     'password' => 'Incorrect password'
                 ]
-            ]);
+            ], 403);
         }
 
         $user = User::where('email', $request->email)->firstOrFail();
@@ -39,7 +39,7 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string|max:255|min:2',
             'email' => 'required|email|max:255|string',
-            'password' => 'required|min:8|string'
+            'password' => 'required|min:8|string|confirmed'
         ]);
         
         $user = User::create([
